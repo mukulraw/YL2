@@ -465,20 +465,20 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.C
                 uploadVideo(videoUri);
             }
             else if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE) {
-                if (resultCode == MainActivity.RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     realUri = Uri.parse(fileUri.getPath());
                     //imgPostServices();
 
                     uploadVideo(realUri);
 
-                } else if (resultCode == MainActivity.RESULT_CANCELED) {
+                } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(HomeActivity.this, "User cancelled the video capture.", Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(HomeActivity.this, "Video capture failed.", Toast.LENGTH_LONG).show();
 
                 }
-            } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == MainActivity.RESULT_OK) {
+            } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 //    ivProfileEditProfile.setImageBitmap(photo);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -495,7 +495,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.C
                     e.printStackTrace();
                 }
                 //   Toast.makeText(RegisterRider.this, ""+realUri, Toast.LENGTH_SHORT).show();
-            } else if (resultCode == MainActivity.RESULT_OK && requestCode == GALLEY_REQUEST_CODE_CUSTOMER) {
+            } else if (resultCode == RESULT_OK && requestCode == GALLEY_REQUEST_CODE_CUSTOMER) {
                 if (data.getData() != null) {
                     try {
                         Log.d("TAG", "not cust");

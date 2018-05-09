@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.yl.youthlive.HomeActivity;
 import com.yl.youthlive.Login;
 import com.yl.youthlive.Signin;
 
@@ -129,7 +131,7 @@ public class SessionManager {
         // Check login status
         if(!this.isLoggedIn()){
             // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(context, MainActivity.class);
+            Intent i = new Intent(context, HomeActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             // Add new Flag to start new Activity

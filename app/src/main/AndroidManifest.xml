@@ -68,9 +68,6 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name=".Screen1"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Login"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -87,9 +84,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".OTP"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".GoLive"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LiveScreen"
