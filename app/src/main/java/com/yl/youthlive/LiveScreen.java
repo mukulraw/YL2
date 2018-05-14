@@ -234,12 +234,12 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
 
 
 
-        if (mPermissionsGranted && goCoderCameraView != null) {
+        /*if (mPermissionsGranted && goCoderCameraView != null) {
             if (goCoderCameraView.isPreviewPaused())
                 goCoderCameraView.onResume();
             else
                 goCoderCameraView.startPreview();
-        }
+        }*/
 
 // Designate the audio device as the audio broadcaster
         goCoderBroadcastConfig.setAudioBroadcaster(goCoderAudioDevice);
@@ -378,6 +378,10 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
 
         super.onPause();
 
+        if (goCoderCameraView != null) {
+            goCoderCameraView.onPause();
+        }
+
         //goCoderCameraView.stopPreview();
 
         //mBroadcaster.onActivityPause();
@@ -399,6 +403,14 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
         //goCoderCameraView.onResume();
 
 
+        if (mPermissionsGranted && goCoderCameraView != null) {
+            if (goCoderCameraView.isPreviewPaused())
+                goCoderCameraView.onResume();
+            else
+                goCoderCameraView.startPreview();
+        }
+
+
         if (goCoder != null && goCoderCameraView != null) {
             if (mAutoFocusDetector == null)
                 mAutoFocusDetector = new GestureDetectorCompat(this, new AutoFocusListener(this, goCoderCameraView));
@@ -407,6 +419,7 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
             if (activeCamera != null && activeCamera.hasCapability(WZCamera.FOCUS_MODE_CONTINUOUS))
                 activeCamera.setFocusMode(WZCamera.FOCUS_MODE_CONTINUOUS);
         }
+
 
 
         //mBroadcaster.setCameraSurface(mPreviewSurface);
@@ -452,25 +465,7 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
 
 
 
-    @Override
-    protected void onDestroy() {
-        /*
-         * Always disconnect from the room before leaving the Activity to
-         * ensure any memory allocated to the Room resource is freed.
-         */
-        /*if (room != null && room.getState() != RoomState.DISCONNECTED) {
-            room.disconnect();
-            disconnectedFromOnDestroy = true;
-        }*/
 
-        /*
-         * Release the local audio and video tracks ensuring any memory allocated to audio
-         * or video is freed.
-         */
-
-
-        super.onDestroy();
-    }
 
 
     @Override
@@ -487,25 +482,33 @@ public class LiveScreen extends AppCompatActivity implements WZStatusCallback {
         switch (wzStatus.getState()) {
             case WZState.STARTING:
                 statusMessage.append("Broadcast initialization");
+                Log.d("statuss" , statusMessage.toString());
                 break;
 
             case WZState.READY:
                 statusMessage.append("Ready to begin streaming");
+                Log.d("statuss" , statusMessage.toString());
                 break;
 
             case WZState.RUNNING:
                 started = true;
                 statusMessage.append("Streaming is active");
+                Log.d("statuss" , statusMessage.toString());
                 break;
 
             case WZState.STOPPING:
                 statusMessage.append("Broadcast shutting down");
+                Log.d("statuss" , statusMessage.toString());
                 break;
 
             case WZState.IDLE:
                 statusMessage.append("The broadcast is stopped");
+                Log.d("statuss" , statusMessage.toString());
                 break;
-
+            case WZState.PAUSED:
+                statusMessage.append("The broadcast is paused");
+                Log.d("statuss" , statusMessage.toString());
+                break;
             default:
                 return;
         }

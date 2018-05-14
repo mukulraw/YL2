@@ -57,6 +57,7 @@ import com.veer.hiddenshot.HiddenShot;
 import com.wowza.gocoder.sdk.api.WowzaGoCoder;
 import com.wowza.gocoder.sdk.api.broadcast.WZBroadcast;
 import com.wowza.gocoder.sdk.api.broadcast.WZBroadcastConfig;
+import com.wowza.gocoder.sdk.api.configuration.WZMediaConfig;
 import com.wowza.gocoder.sdk.api.devices.WZAudioDevice;
 import com.wowza.gocoder.sdk.api.devices.WZCameraView;
 import com.wowza.gocoder.sdk.api.errors.WZStreamingError;
@@ -990,6 +991,41 @@ public class player_first extends Fragment implements WZStatusCallback {
 
                     cameraLayout1.setVisibility(View.VISIBLE);
 
+
+                    goCoderAudioDevice = new WZAudioDevice();
+
+
+                    goCoderBroadcaster = new WZBroadcast();
+
+// Create a configuration instance for the broadcaster
+                    goCoderBroadcastConfig = new WZBroadcastConfig(WZMediaConfig.FRAME_SIZE_320x240);
+
+                    goCoderCameraView.setScaleMode(WZMediaConfig.FILL_VIEW);
+
+// Set the connection properties for the target Wowza Streaming Engine server or Wowza Cloud account
+
+                    //goCoderBroadcastConfig.setConnectionParameters(new WZDataMap());
+
+// Designate the camera preview as the video source
+                    goCoderBroadcastConfig.setVideoBroadcaster(goCoderCameraView);
+
+
+
+        /*if (mPermissionsGranted && goCoderCameraView != null) {
+            if (goCoderCameraView.isPreviewPaused())
+                goCoderCameraView.onResume();
+            else
+                goCoderCameraView.startPreview();
+        }*/
+
+// Designate the audio device as the audio broadcaster
+                    goCoderBroadcastConfig.setAudioBroadcaster(goCoderAudioDevice);
+
+
+                        if (goCoderCameraView.isPreviewPaused())
+                            goCoderCameraView.onResume();
+                        else
+                            goCoderCameraView.startPreview();
 
 
                     //displayFirebaseRegId();

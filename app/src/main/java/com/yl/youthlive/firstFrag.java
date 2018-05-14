@@ -916,8 +916,11 @@ public class firstFrag extends Fragment implements WZStatusCallback {
 
 
 
-                        if (mode.equals("1"))
+                        if (mode.equals("2"))
                         {
+
+                            playerLayout1.setVisibility(View.GONE);
+
                             mStreamPlayerConfig = new WZPlayerConfig();
 
 
@@ -1425,7 +1428,7 @@ public class firstFrag extends Fragment implements WZStatusCallback {
                         //  mTimerView.startTimer();
 
                         // Since we have successfully opened up the server connection, store the connection info for auto complete
-                        GoCoderSDKPrefs.storeHostConfig(PreferenceManager.getDefaultSharedPreferences(getContext()), mStreamPlayerConfig);
+                        //GoCoderSDKPrefs.storeHostConfig(PreferenceManager.getDefaultSharedPreferences(getContext()), mStreamPlayerConfig);
 
                         // Log the stream metadata
                         //WZLog.debug(TAG, "Stream metadata:\n" + mStreamPlayerView.getMetadata());
@@ -1544,9 +1547,9 @@ public class firstFrag extends Fragment implements WZStatusCallback {
                     String uid = item.getUserId();
                     uid.replace("\"" , "");
 
-                    Intent intent = new Intent(context, TimelineProfile.class);
-                    intent.putExtra("userId", uid);
-                    startActivity(intent);
+                    //Intent intent = new Intent(context, TimelineProfile.class);
+                    //intent.putExtra("userId", uid);
+                    //startActivity(intent);
 
                 }
             });
@@ -1639,9 +1642,9 @@ public class firstFrag extends Fragment implements WZStatusCallback {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, TimelineProfile.class);
-                    intent.putExtra("userId", uid);
-                    startActivity(intent);
+                    //Intent intent = new Intent(context, TimelineProfile.class);
+                    //intent.putExtra("userId", uid);
+                    //startActivity(intent);
 
                 }
             });
@@ -1659,7 +1662,7 @@ public class firstFrag extends Fragment implements WZStatusCallback {
                 public void onClick(View view) {
 
 
-                    Dialog dialog = new Dialog(getActivity());
+                    final Dialog dialog = new Dialog(getActivity());
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.connect_dialog);
                     dialog.setCancelable(true);
@@ -1747,6 +1750,8 @@ public class firstFrag extends Fragment implements WZStatusCallback {
                                     playerLayout1.setVisibility(View.VISIBLE);
 
 
+                                    dialog.dismiss();
+
                                     progress.setVisibility(View.GONE);
                                 }
 
@@ -1812,11 +1817,26 @@ public class firstFrag extends Fragment implements WZStatusCallback {
 
         super.onPause();
 
+
+        if (lvscreen.goCoderCameraView != null) {
+            lvscreen.goCoderCameraView.onPause();
+        }
+
+        lvscreen.goCoderBroadcaster.endBroadcast();
+
         //goCoderCameraView.stopPreview();
 
         //mBroadcaster.onActivityPause();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        lvscreen.goCoderBroadcaster.startBroadcast(lvscreen.goCoderBroadcastConfig);
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
